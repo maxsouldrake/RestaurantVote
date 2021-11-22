@@ -1,5 +1,7 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
+import java.time.LocalDate;
+
 /**
  * @author SoulDrake
  * @create 2021-11-22 12:56
@@ -8,15 +10,17 @@ package com.github.maxsouldrake.restaurantvote.model;
 public class Meal extends AbstractBaseEntity {
     private String title;
     private long price;
+    private LocalDate date;
 
-    public Meal(Integer id, String title, long price) {
+    public Meal(Integer id, String title, long price, LocalDate date) {
         super(id);
         this.title = title;
         this.price = price;
+        this.date = date;
     }
 
-    public Meal(String title, long price) {
-        this(null, title, price);
+    public Meal(String title, long price, LocalDate date) {
+        this(null, title, price, date);
     }
 
     public String getTitle() {
@@ -33,6 +37,14 @@ public class Meal extends AbstractBaseEntity {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override

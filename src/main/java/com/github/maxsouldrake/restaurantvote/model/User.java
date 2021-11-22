@@ -10,19 +10,19 @@ import java.util.Set;
 public class User extends AbstractBaseEntity {
     private String email;
     private String password;
-    private Set<Role> roles;
+    private Role role;
     private Vote vote;
 
-    public User(Integer id, String email, String password, Set<Role> roles, Vote vote) {
+    public User(Integer id, String email, String password, Role role, Vote vote) {
         super(id);
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
         this.vote = vote;
     }
 
-    public User(String email, String password, Set<Role> roles, Vote vote) {
-        this(null, email, password, roles, vote);
+    public User(String email, String password, Role role, Vote vote) {
+        this(null, email, password, role, vote);
     }
 
     public String getEmail() {
@@ -41,12 +41,12 @@ public class User extends AbstractBaseEntity {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Vote getVote() {
@@ -63,7 +63,7 @@ public class User extends AbstractBaseEntity {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", roles=" + roles +
+                ", role=" + role +
                 ", vote=" + vote +
                 '}';
     }
