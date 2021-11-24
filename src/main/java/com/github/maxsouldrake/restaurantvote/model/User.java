@@ -1,5 +1,9 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
 import java.util.Set;
 
 /**
@@ -7,22 +11,40 @@ import java.util.Set;
  * @create 2021-11-22 12:54
  **/
 
+@Entity
+@Table(name = "users")
 public class User extends AbstractBaseEntity {
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
-    private String password;
-    private Role role;
-    private Vote vote;
 
-    public User(Integer id, String email, String password, Role role, Vote vote) {
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role"}, name = "user_roles_idx")})
+    @Column(name = "role")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Role role;
+
+    @CollectionTable(name = "votes", joinColumns = @JoinColumn(name = "user_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "votes_unique_date_user_idx")})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Vote> votes;
+
+    public User(Integer id, String email, String password, Role role) {
         super(id);
         this.email = email;
         this.password = password;
         this.role = role;
-        this.vote = vote;
     }
 
-    public User(String email, String password, Role role, Vote vote) {
-        this(null, email, password, role, vote);
+    public User(String email, String password, Role role) {
+        this(null, email, password, role);
+    }
+
+    public User() {
+
     }
 
     public String getEmail() {
@@ -49,14 +71,6 @@ public class User extends AbstractBaseEntity {
         this.role = role;
     }
 
-    public Vote getVote() {
-        return vote;
-    }
-
-    public void setVote(Vote vote) {
-        this.vote = vote;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -64,7 +78,6 @@ public class User extends AbstractBaseEntity {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
-                ", vote=" + vote +
                 '}';
     }
 }

@@ -53,5 +53,5 @@ CREATE TABLE votes
     user_id       INTEGER   NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX votes_unique_date_user_restaurant_idx
-    ON votes (date, user_id, restaurant_id);
+CREATE UNIQUE INDEX votes_unique_date_user_idx
+    ON votes (date, user_id);
