@@ -1,6 +1,5 @@
 package com.github.maxsouldrake.restaurantvote.repository;
 
-import com.github.maxsouldrake.restaurantvote.model.User;
 import com.github.maxsouldrake.restaurantvote.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  **/
 
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
+    Vote findByIdAndUserId(int id, int userId);
+    void deleteByIdAndUserId(int id, int userId);
 }
