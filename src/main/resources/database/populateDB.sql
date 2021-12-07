@@ -1,8 +1,13 @@
-DELETE FROM user_roles;
-DELETE FROM meals;
-DELETE FROM votes;
-DELETE FROM users;
-DELETE FROM restaurants;
+DELETE
+FROM user_roles;
+DELETE
+FROM meals;
+DELETE
+FROM votes;
+DELETE
+FROM users;
+DELETE
+FROM restaurants;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (email, password)

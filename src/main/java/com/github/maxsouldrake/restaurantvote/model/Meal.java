@@ -2,7 +2,6 @@ package com.github.maxsouldrake.restaurantvote.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;

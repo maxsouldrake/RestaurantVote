@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -42,19 +41,9 @@ public class PersistenceConfig {
         properties.put(SHOW_SQL, environment.getRequiredProperty("hibernate.show_sql"));
         properties.put(FORMAT_SQL, environment.getRequiredProperty("hibernate.format_sql"));
         properties.put(USE_SQL_COMMENTS, environment.getRequiredProperty("hibernate.use_sql_comments"));
-        properties.put(JPA_PROXY_COMPLIANCE, environment.getRequiredProperty("hibernate.jpa.compliance.proxy"));
+        properties.put(JPA_PROXY_COMPLIANCE, environment.getRequiredProperty("hibernate.jpa_proxy_compliance"));
         return properties;
     }
-
-/*    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(environment.getRequiredProperty("database.driver"));
-        dataSource.setUrl(environment.getRequiredProperty("database.url"));
-        dataSource.setUsername(environment.getRequiredProperty("database.username"));
-        dataSource.setPassword(environment.getRequiredProperty("database.password"));
-        return dataSource;
-    }*/
 
     @Bean
     public DataSource dataSource() {
