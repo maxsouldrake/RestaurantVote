@@ -1,6 +1,4 @@
 DELETE
-FROM user_roles;
-DELETE
 FROM meals;
 DELETE
 FROM votes;
@@ -10,17 +8,13 @@ DELETE
 FROM restaurants;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
-INSERT INTO users (email, password)
-VALUES ('user@gmail.com', 'userpass'),
-       ('admin@gmail.com', 'adminpass');
+INSERT INTO users (email, password, role)
+VALUES ('user@gmail.com', 'userpass', 'USER'),
+       ('admin@gmail.com', 'adminpass', 'ADMIN');
 
 INSERT INTO restaurants (title)
 VALUES ('Burger Frog'),
        ('Pizza Shot');
-
-INSERT INTO user_roles (role, user_id)
-VALUES ('USER', 100000),
-       ('ADMIN', 100001);
 
 INSERT INTO meals (title, date, price, restaurant_id)
 VALUES ('burger', '2020-01-30', 1299, 100002),
