@@ -59,7 +59,7 @@ public class PersistenceConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource());
-        entityManagerFactory.setPackagesToScan("org.souldrake.**.model");
+        entityManagerFactory.setPackagesToScan("com.github.maxsouldrake.**.model");
         entityManagerFactory.setJpaVendorAdapter(jpaVendorAdapter());
         entityManagerFactory.setJpaProperties(hibernateProperties());
         return entityManagerFactory;

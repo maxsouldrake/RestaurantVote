@@ -1,5 +1,6 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -33,6 +34,23 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
     @Override
     public boolean isNew() {
         return this.id == null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
+            return false;
+        }
+        AbstractBaseEntity baseEntity = (AbstractBaseEntity) o;
+        return id != null && id.equals(baseEntity.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id;
     }
 
     @Override
