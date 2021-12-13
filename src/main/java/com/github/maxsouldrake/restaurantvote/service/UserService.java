@@ -3,6 +3,7 @@ package com.github.maxsouldrake.restaurantvote.service;
 import com.github.maxsouldrake.restaurantvote.model.User;
 import com.github.maxsouldrake.restaurantvote.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  **/
 
 @Service
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
 
@@ -31,14 +33,17 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Transactional
     public User update(User user) {
         return userRepository.save(user);
     }
 
+    @Transactional
     public User create(User user) {
         return userRepository.save(user);
     }
 
+    @Transactional
     public void delete(int id) {
         userRepository.deleteById(id);
     }

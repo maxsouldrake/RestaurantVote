@@ -4,6 +4,7 @@ import com.github.maxsouldrake.restaurantvote.model.Vote;
 import com.github.maxsouldrake.restaurantvote.repository.UserRepository;
 import com.github.maxsouldrake.restaurantvote.repository.VoteRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author SoulDrake
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
+@Transactional(readOnly = true)
 public class VoteService {
     private final VoteRepository voteRepository;
     private final UserRepository userRepository;
@@ -24,16 +26,19 @@ public class VoteService {
         return voteRepository.findByIdAndUserId(id, userId);
     }
 
+    @Transactional
     public Vote update(Vote vote, int userId) {
         vote.setUser(userRepository.getById(userId));
         return voteRepository.save(vote);
     }
 
+    @Transactional
     public Vote create(Vote vote, int userId) {
         vote.setUser(userRepository.getById(userId));
         return voteRepository.save(vote);
     }
 
+    @Transactional
     public void delete(int id, int userId) {
         voteRepository.deleteByIdAndUserId(id, userId);
     }

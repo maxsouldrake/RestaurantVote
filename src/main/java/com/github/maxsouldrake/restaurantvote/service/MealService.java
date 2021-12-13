@@ -4,6 +4,7 @@ import com.github.maxsouldrake.restaurantvote.model.Meal;
 import com.github.maxsouldrake.restaurantvote.repository.MealRepository;
 import com.github.maxsouldrake.restaurantvote.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  **/
 
 @Service
+@Transactional(readOnly = true)
 public class MealService {
     private final MealRepository mealRepository;
     private final RestaurantRepository restaurantRepository;
@@ -30,16 +32,19 @@ public class MealService {
         return mealRepository.findByIdAndRestaurantId(id, restaurantId);
     }
 
+    @Transactional
     public Meal update(Meal meal, int restaurantId) {
         meal.setRestaurant(restaurantRepository.getById(restaurantId));
         return mealRepository.save(meal);
     }
 
+    @Transactional
     public Meal create(Meal meal, int restaurantId) {
         meal.setRestaurant(restaurantRepository.getById(restaurantId));
         return mealRepository.save(meal);
     }
 
+    @Transactional
     public void delete(int id, int restaurantId) {
         mealRepository.deleteByIdAndRestaurantId(id, restaurantId);
     }
