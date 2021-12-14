@@ -1,5 +1,8 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -24,6 +27,7 @@ public class User extends AbstractBaseEntity {
     @CollectionTable(name = "votes", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "votes_unique_date_user_idx")})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Vote> votes;
 
     public User(Integer id, String email, String password, Role role) {

@@ -26,6 +26,7 @@ public class Restaurant extends AbstractBaseEntity {
     private List<Meal> menu;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Vote> votes;
 
     public Restaurant(Integer id, String title) {
