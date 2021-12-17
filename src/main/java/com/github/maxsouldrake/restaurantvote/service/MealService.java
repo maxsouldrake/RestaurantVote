@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
+
 /**
  * @author SoulDrake
  * @create 2021-12-07 13:55
@@ -29,12 +31,13 @@ public class MealService {
     }
 
     public Meal get(int id, int restaurantId) {
-        return mealRepository.findByIdAndRestaurantId(id, restaurantId);
+        return checkNotFound(mealRepository.findByIdAndRestaurantId(id, restaurantId), id);
     }
 
     @Transactional
     public Meal update(Meal meal, int restaurantId) {
         meal.setRestaurant(restaurantRepository.getById(restaurantId));
+        checkNotFound(get(meal.getId(), restaurantId), restaurantId);
         return mealRepository.save(meal);
     }
 
@@ -46,6 +49,6 @@ public class MealService {
 
     @Transactional
     public void delete(int id, int restaurantId) {
-        mealRepository.deleteByIdAndRestaurantId(id, restaurantId);
+        checkNotFound(mealRepository.deleteByIdAndRestaurantId(id, restaurantId) != 0, id);
     }
 }

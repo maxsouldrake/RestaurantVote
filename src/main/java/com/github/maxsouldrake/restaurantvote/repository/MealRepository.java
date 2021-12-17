@@ -13,5 +13,5 @@ import java.util.List;
 public interface MealRepository extends JpaRepository<Meal, Integer> {
     List<Meal> findAllByRestaurantId(int restaurantId);
     Meal findByIdAndRestaurantId(int id, int restaurantId);
-    void deleteByIdAndRestaurantId(int id, int restaurantId);
+    int deleteByIdAndRestaurantId(int id, int restaurantId);
 }

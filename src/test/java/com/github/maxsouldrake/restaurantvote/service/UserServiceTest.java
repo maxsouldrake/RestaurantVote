@@ -4,21 +4,19 @@ import com.github.maxsouldrake.restaurantvote.config.AppConfig;
 import com.github.maxsouldrake.restaurantvote.config.PersistenceConfig;
 import com.github.maxsouldrake.restaurantvote.model.Role;
 import com.github.maxsouldrake.restaurantvote.model.User;
+import com.github.maxsouldrake.restaurantvote.util.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static com.github.maxsouldrake.restaurantvote.testdata.UserTestData.*;
+import static com.github.maxsouldrake.restaurantvote.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringJUnitConfig({AppConfig.class, PersistenceConfig.class})
 @Sql(scripts = "classpath:database/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"), executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -43,13 +41,13 @@ class UserServiceTest {
 
     @Test
     void getNotFound() {
-        assertThrows(NoSuchElementException.class, () -> userService.get(NOT_FOUND_ID));
+        assertThrows(NotFoundException.class, () -> userService.get(NOT_FOUND_ID));
     }
 
     @Test
     void create() {
-        User newUser = getNew();
-        User created = userService.create(getNew());
+        User newUser = getNew(User.class);
+        User created = userService.create(getNew(User.class));
         Integer newId = created.getId();
         newUser.setId(newId);
         assertEquals(created, newUser);
@@ -64,23 +62,18 @@ class UserServiceTest {
 
     @Test
     void update() {
-        User updated = userService.update(getUpdated());
+        User updated = userService.update(getUpdated(User.class));
         assertEquals(userService.get(USER_ID), updated);
     }
 
     @Test
-    void updateNotFound() {
-        assertThrows(NoSuchElementException.class, () -> userService.get(NOT_FOUND_ID));
-    }
-
-    @Test
     void delete() {
-        userService.delete(USER_ID);
-        assertThrows(NoSuchElementException.class, () -> userService.get(USER_ID));
+        assertDoesNotThrow(() -> userService.delete(USER_ID));
+        assertThrows(NotFoundException.class, () -> userService.get(USER_ID));
     }
 
     @Test
     void deleteNotFound() {
-        assertThrows(EmptyResultDataAccessException.class, () -> userService.delete(NOT_FOUND_ID));
+        assertThrows(NotFoundException.class, () -> userService.delete(NOT_FOUND_ID));
     }
 }

@@ -3,22 +3,19 @@ package com.github.maxsouldrake.restaurantvote.service;
 import com.github.maxsouldrake.restaurantvote.config.AppConfig;
 import com.github.maxsouldrake.restaurantvote.config.PersistenceConfig;
 import com.github.maxsouldrake.restaurantvote.model.Restaurant;
-import com.github.maxsouldrake.restaurantvote.testdata.UserTestData;
+import com.github.maxsouldrake.restaurantvote.util.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static com.github.maxsouldrake.restaurantvote.testdata.RestaurantTestData.*;
+import static com.github.maxsouldrake.restaurantvote.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringJUnitConfig({AppConfig.class, PersistenceConfig.class})
 @Sql(scripts = "classpath:database/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"), executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -43,13 +40,13 @@ class RestaurantServiceTest {
 
     @Test
     void getNotFound() {
-        assertThrows(NoSuchElementException.class, () -> restaurantService.get(UserTestData.NOT_FOUND_ID));
+        assertThrows(NotFoundException.class, () -> restaurantService.get(NOT_FOUND_ID));
     }
 
     @Test
     void create() {
-        Restaurant newRestaurant = getNew();
-        Restaurant created = restaurantService.create(getNew());
+        Restaurant newRestaurant = getNew(Restaurant.class);
+        Restaurant created = restaurantService.create(getNew(Restaurant.class));
         Integer newId = created.getId();
         newRestaurant.setId(newId);
         assertEquals(created, newRestaurant);
@@ -64,23 +61,18 @@ class RestaurantServiceTest {
 
     @Test
     void update() {
-        Restaurant updated = restaurantService.update(getUpdated());
+        Restaurant updated = restaurantService.update(getUpdated(Restaurant.class));
         assertEquals(restaurantService.get(RESTAURANT_ID), updated);
     }
 
     @Test
-    void updateNotFound() {
-        assertThrows(NoSuchElementException.class, () -> restaurantService.get(UserTestData.NOT_FOUND_ID));
-    }
-
-    @Test
     void delete() {
-        restaurantService.delete(RESTAURANT_ID);
-        assertThrows(NoSuchElementException.class, () -> restaurantService.get(RESTAURANT_ID));
+        assertDoesNotThrow(() -> restaurantService.delete(RESTAURANT_ID));
+        assertThrows(NotFoundException.class, () -> restaurantService.get(RESTAURANT_ID));
     }
 
     @Test
     void deleteNotFound() {
-        assertThrows(EmptyResultDataAccessException.class, () -> restaurantService.delete(UserTestData.NOT_FOUND_ID));
+        assertThrows(NotFoundException.class, () -> restaurantService.delete(NOT_FOUND_ID));
     }
 }

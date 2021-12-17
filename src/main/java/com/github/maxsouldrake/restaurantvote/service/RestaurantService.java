@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
 
 /**
  * @author SoulDrake
@@ -27,16 +30,18 @@ public class RestaurantService {
     }
 
     public Restaurant get(int id) {
-        return restaurantRepository.findById(id).get();
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        checkNotFound(restaurant.isPresent(), id);
+        return restaurant.get();
     }
 
     public Restaurant getByTitle(String title) {
-        return restaurantRepository.findByTitle(title);
+        return checkNotFound(restaurantRepository.findByTitle(title), title);
     }
 
     @Transactional
     public Restaurant update(Restaurant restaurant) {
-        return restaurantRepository.save(restaurant);
+        return checkNotFound(restaurantRepository.save(restaurant), restaurant.getId());
     }
 
     @Transactional
@@ -46,6 +51,7 @@ public class RestaurantService {
 
     @Transactional
     public void delete(int id) {
+        checkNotFound(restaurantRepository.existsById(id), id);
         restaurantRepository.deleteById(id);
     }
 }

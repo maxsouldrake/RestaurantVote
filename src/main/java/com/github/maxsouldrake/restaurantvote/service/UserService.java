@@ -2,10 +2,13 @@ package com.github.maxsouldrake.restaurantvote.service;
 
 import com.github.maxsouldrake.restaurantvote.model.User;
 import com.github.maxsouldrake.restaurantvote.repository.UserRepository;
+import com.github.maxsouldrake.restaurantvote.util.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
 
 /**
  * @author SoulDrake
@@ -26,16 +29,16 @@ public class UserService {
     }
 
     public User get(int id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found entity with id=" + id));
     }
 
     public User getByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return checkNotFound(userRepository.findByEmail(email), email);
     }
 
     @Transactional
     public User update(User user) {
-        return userRepository.save(user);
+        return checkNotFound(userRepository.save(user), user.getId());
     }
 
     @Transactional
@@ -45,6 +48,7 @@ public class UserService {
 
     @Transactional
     public void delete(int id) {
+        checkNotFound(userRepository.existsById(id), id);
         userRepository.deleteById(id);
     }
 }

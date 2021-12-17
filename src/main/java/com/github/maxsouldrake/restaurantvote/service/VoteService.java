@@ -6,6 +6,8 @@ import com.github.maxsouldrake.restaurantvote.repository.VoteRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
+
 /**
  * @author SoulDrake
  * @create 2021-12-07 15:00
@@ -23,12 +25,13 @@ public class VoteService {
     }
 
     public Vote get(int id, int userId) {
-        return voteRepository.findByIdAndUserId(id, userId);
+        return checkNotFound(voteRepository.findByIdAndUserId(id, userId), id);
     }
 
     @Transactional
     public Vote update(Vote vote, int userId) {
         vote.setUser(userRepository.getById(userId));
+        checkNotFound(get(vote.getId(), userId), userId);
         return voteRepository.save(vote);
     }
 
@@ -40,6 +43,6 @@ public class VoteService {
 
     @Transactional
     public void delete(int id, int userId) {
-        voteRepository.deleteByIdAndUserId(id, userId);
+        checkNotFound(voteRepository.deleteByIdAndUserId(id, userId) != 0, id);
     }
 }

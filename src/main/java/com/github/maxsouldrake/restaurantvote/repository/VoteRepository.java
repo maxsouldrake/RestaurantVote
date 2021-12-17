@@ -10,5 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
     Vote findByIdAndUserId(int id, int userId);
-    void deleteByIdAndUserId(int id, int userId);
+    int deleteByIdAndUserId(int id, int userId);
 }
