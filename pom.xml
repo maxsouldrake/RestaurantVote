@@ -41,6 +41,9 @@
 
         <!--   Tomcat   -->
         <tomcat.version>9.0.54</tomcat.version>
+
+        <!--   JSON   -->
+        <jackson.version>2.13.0</jackson.version>
     </properties>
 
     <dependencies>
@@ -101,6 +104,13 @@
             <artifactId>tomcat-servlet-api</artifactId>
             <version>${tomcat.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--   JSON   -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
         <!-- Logging  -->

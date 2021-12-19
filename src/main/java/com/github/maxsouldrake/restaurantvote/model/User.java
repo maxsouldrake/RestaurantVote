@@ -1,5 +1,6 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -24,6 +25,7 @@ public class User extends AbstractBaseEntity {
     @Column(name = "role")
     private Role role;
 
+    @JsonIgnore
     @CollectionTable(name = "votes", joinColumns = @JoinColumn(name = "user_id"),
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "votes_unique_date_user_idx")})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

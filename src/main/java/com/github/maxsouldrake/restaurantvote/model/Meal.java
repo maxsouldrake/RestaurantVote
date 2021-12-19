@@ -1,5 +1,6 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -26,6 +27,7 @@ public class Meal extends AbstractBaseEntity {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
