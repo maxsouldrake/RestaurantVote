@@ -3,6 +3,7 @@ package com.github.maxsouldrake.restaurantvote.repository;
 import com.github.maxsouldrake.restaurantvote.model.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  **/
 
 public interface MealRepository extends JpaRepository<Meal, Integer> {
-    List<Meal> findAllByRestaurantId(int restaurantId);
-    Meal findByIdAndRestaurantId(int id, int restaurantId);
-    int deleteByIdAndRestaurantId(int id, int restaurantId);
+    List<Meal> findAllByRestaurantIdAndDate(int restaurant_id, LocalDate date);
+    Meal findByIdAndRestaurantIdAndDate(int id, int restaurant_id, LocalDate date);
+    int deleteByIdAndRestaurantIdAndDate(int id, int restaurant_id, LocalDate date);
 }

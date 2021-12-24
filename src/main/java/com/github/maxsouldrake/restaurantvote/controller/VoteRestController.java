@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 
 @RestController
-@RequestMapping(value = "/profile/votes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/profile/vote", produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {
     private final VoteService voteService;
 
@@ -20,24 +20,23 @@ public class VoteRestController {
         this.voteService = voteService;
     }
 
-    @GetMapping("/{id}")
-    public Vote get(@PathVariable int id) {
-        return voteService.get(id, SecurityUtil.authUserId());
+    @GetMapping
+    public Vote get() {
+        return voteService.get(SecurityUtil.authUserId());
     }
 
     @PostMapping
-    public Vote create(@RequestBody Vote vote) {
-        return voteService.create(vote, SecurityUtil.authUserId());
+    public Vote create(@RequestBody Vote vote, @RequestParam int restaurantId) {
+        return voteService.create(vote, SecurityUtil.authUserId(), restaurantId);
     }
 
-    @PutMapping("/{id}")
-    public Vote update(@RequestBody Vote vote,  @PathVariable int id) {
-        vote.setId(id);
-        return voteService.update(vote, SecurityUtil.authUserId());
+    @PutMapping
+    public Vote update(@RequestBody Vote vote, @RequestParam int restaurantId) {
+        return voteService.update(vote, SecurityUtil.authUserId(), restaurantId);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        voteService.delete(id, SecurityUtil.authUserId());
+    @DeleteMapping
+    public void delete() {
+        voteService.delete(SecurityUtil.authUserId());
     }
 }

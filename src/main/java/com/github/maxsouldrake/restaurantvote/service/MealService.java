@@ -6,6 +6,7 @@ import com.github.maxsouldrake.restaurantvote.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
@@ -27,11 +28,11 @@ public class MealService {
     }
 
     public List<Meal> getAll(int restaurantId) {
-        return mealRepository.findAllByRestaurantId(restaurantId);
+        return mealRepository.findAllByRestaurantIdAndDate(restaurantId, LocalDate.now());
     }
 
     public Meal get(int id, int restaurantId) {
-        return checkNotFound(mealRepository.findByIdAndRestaurantId(id, restaurantId), id);
+        return checkNotFound(mealRepository.findByIdAndRestaurantIdAndDate(id, restaurantId,  LocalDate.now()), id);
     }
 
     @Transactional
@@ -49,6 +50,6 @@ public class MealService {
 
     @Transactional
     public void delete(int id, int restaurantId) {
-        checkNotFound(mealRepository.deleteByIdAndRestaurantId(id, restaurantId) != 0, id);
+        checkNotFound(mealRepository.deleteByIdAndRestaurantIdAndDate(id, restaurantId, LocalDate.now()) != 0, id);
     }
 }

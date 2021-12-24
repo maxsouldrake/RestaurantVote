@@ -41,6 +41,11 @@ public class RestaurantRestController {
         return restaurantService.getByTitle(title);
     }
 
+    @GetMapping("/{id}/with-menu-and-votes")
+    public Restaurant getWithMenuAndVotes(@PathVariable int id) {
+        return restaurantService.getWithMenuAndVotes(id);
+    }
+
     @GetMapping("/{id}/menu")
     public List<Meal> getMenu(@PathVariable int id) {
         return mealService.getAll(id);
