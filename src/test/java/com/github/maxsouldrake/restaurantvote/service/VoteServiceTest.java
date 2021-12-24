@@ -11,8 +11,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.time.LocalDate;
-
 import static com.github.maxsouldrake.restaurantvote.TestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,61 +22,44 @@ class VoteServiceTest {
 
     @Test
     void get() {
-        assertEquals(voteService.get(VOTE_ID, USER_ID), user1vote1);
+        assertEquals(voteService.get(USER_ID), user1TodayVote);
     }
 
     @Test
     void getNotFound() {
-        assertThrows(NotFoundException.class, () -> voteService.get(NOT_FOUND_ID, USER_ID));
+        assertThrows(NotFoundException.class, () -> voteService.get(USER_ID + 2));
     }
-
-    @Test
-    void getNotOwn() {
-        assertThrows(NotFoundException.class, () -> voteService.get(VOTE_ID, USER_ID + 1));
-    }
-
 
     @Test
     void create() {
         Vote newVote = getNew(Vote.class);
-        Vote created = voteService.create(getNew(Vote.class), USER_ID);
+        Vote created = voteService.create(getNew(Vote.class), USER_ID + 1, RESTAURANT_ID + 1);
         Integer newId = created.getId();
         newVote.setId(newId);
         assertEquals(created, newVote);
-        assertEquals(voteService.get(newId, USER_ID), newVote);
+        assertEquals(voteService.get(USER_ID + 1), newVote);
     }
 
     @Test
     void duplicateDateCreate() {
         assertThrows(DataAccessException.class, () ->
-                voteService.create(new Vote(null, user1, restaurant1,
-                        LocalDate.of(2020,1,31)), USER_ID));
+                voteService.create(new Vote(restaurant1), USER_ID, RESTAURANT_ID));
     }
 
     @Test
     void update() {
-        Vote updated = voteService.update(getUpdated(Vote.class), USER_ID);
-        assertEquals(voteService.get(VOTE_ID, USER_ID), updated);
-    }
-
-    @Test
-    void updateNotOwn() {
-        assertThrows(NotFoundException.class, () -> voteService.update(getUpdated(Vote.class), USER_ID + 1));
+        Vote updated = voteService.update(getUpdated(Vote.class), USER_ID, RESTAURANT_ID);
+        assertEquals(voteService.get(USER_ID), updated);
     }
 
     @Test
     void delete() {
-        assertDoesNotThrow(() -> voteService.delete(VOTE_ID, USER_ID));
-        assertThrows(NotFoundException.class, () -> voteService.get(VOTE_ID, USER_ID));
+        assertDoesNotThrow(() -> voteService.delete(USER_ID));
+        assertThrows(NotFoundException.class, () -> voteService.get(USER_ID));
     }
 
     @Test
     void deleteNotFound() {
-        assertThrows(NotFoundException.class, () -> voteService.delete(NOT_FOUND_ID, USER_ID));
-    }
-
-    @Test
-    void deleteNotOwn() {
-        assertThrows(NotFoundException.class, () -> voteService.delete(VOTE_ID, USER_ID + 1));
+        assertThrows(NotFoundException.class, () -> voteService.delete(USER_ID + 2));
     }
 }

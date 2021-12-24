@@ -11,7 +11,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static com.github.maxsouldrake.restaurantvote.TestData.*;
@@ -26,7 +25,7 @@ class MealServiceTest {
 
     @Test
     void getAll() {
-        assertThat(mealService.getAll(RESTAURANT_ID)).isEqualTo(List.of(restaurant1Meal1, restaurant1Meal2, restaurant1Meal3, restaurant1Meal4));
+        assertThat(mealService.getAll(RESTAURANT_ID)).isEqualTo(List.of(restaurant1Meal1, restaurant1Meal2));
     }
 
     @Test
@@ -57,8 +56,7 @@ class MealServiceTest {
     @Test
     void duplicateTitleDateCreate() {
         assertThrows(DataAccessException.class, () ->
-                mealService.create(new Meal(null, MEAL_TITLE, 100,
-                        LocalDate.of(2020,1,30)), RESTAURANT_ID));
+                mealService.create(new Meal(null, MEAL_TITLE, 100), RESTAURANT_ID));
     }
 
     @Test

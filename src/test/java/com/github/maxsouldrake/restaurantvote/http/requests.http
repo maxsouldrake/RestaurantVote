@@ -1,0 +1,47 @@
+GET http://localhost:8080/restaurant-vote/restaurants
+
+###
+
+GET http://localhost:8080/restaurant-vote/restaurants/100003
+
+###
+
+GET http://localhost:8080/restaurant-vote/restaurants/100003/with-menu-and-votes
+
+###
+
+GET http://localhost:8080/restaurant-vote/restaurants/by-title?title=Burger Frog
+
+###
+
+GET http://localhost:8080/restaurant-vote/restaurants/100003/menu
+
+###
+
+GET http://localhost:8080/restaurant-vote/restaurants/100003/menu/100011
+
+###
+
+GET http://localhost:8080/restaurant-vote/profile
+
+###
+
+GET http://localhost:8080/restaurant-vote/profile/vote
+
+###
+
+GET http://localhost:8080/restaurant-vote/admin/users
+
+###
+
+GET http://localhost:8080/restaurant-vote/admin/users/100002
+
+###
+
+GET http://localhost:8080/restaurant-vote/admin/users/by-email?email=user1@gmail.com
+
+###
+
+
+
+
