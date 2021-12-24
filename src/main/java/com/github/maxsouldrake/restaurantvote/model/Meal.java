@@ -1,6 +1,6 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -25,23 +25,22 @@ public class Meal extends AbstractBaseEntity {
     private long price;
 
     @Column(name = "date", nullable = false)
-    private LocalDate date;
+    private final LocalDate date = LocalDate.now();
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonBackReference
     private Restaurant restaurant;
 
-    public Meal(Integer id, String title, long price, LocalDate date) {
+    public Meal(Integer id, String title, long price) {
         super(id);
         this.title = title;
         this.price = price;
-        this.date = date;
     }
 
     public Meal(String title, long price, LocalDate date) {
-        this(null, title, price, date);
+        this(null, title, price);
     }
 
     public Meal() {
@@ -65,10 +64,6 @@ public class Meal extends AbstractBaseEntity {
 
     public LocalDate getDate() {
         return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public Restaurant getRestaurant() {

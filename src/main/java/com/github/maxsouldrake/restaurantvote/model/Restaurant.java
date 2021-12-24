@@ -1,6 +1,6 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -22,14 +22,14 @@ public class Restaurant extends AbstractBaseEntity {
     @Column(name = "title", nullable = false, unique = true)
     private String title;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonManagedReference
     private List<Meal> menu;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonManagedReference
     private Set<Vote> votes;
 
     public Restaurant(Integer id, String title) {
@@ -42,7 +42,6 @@ public class Restaurant extends AbstractBaseEntity {
     }
 
     public Restaurant() {
-
     }
 
     public String getTitle() {
@@ -59,6 +58,14 @@ public class Restaurant extends AbstractBaseEntity {
 
     public void setMenu(List<Meal> menu) {
         this.menu = menu;
+    }
+
+    public Set<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(Set<Vote> votes) {
+        this.votes = votes;
     }
 
     @Override
