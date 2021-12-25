@@ -37,7 +37,7 @@ public class VoteService {
 
     public Vote getWithRestaurant(int userId) {
         LocalDate date = LocalDate.now();
-        return checkNotFound(voteRepository.findWithRestaurant(userId,date), userId, date);
+        return checkNotFound(voteRepository.findWithRestaurant(userId, date), userId, date);
     }
 
     @Transactional

@@ -32,7 +32,7 @@ public class MealService {
     }
 
     public Meal get(int id, int restaurantId) {
-        return checkNotFound(mealRepository.findByIdAndRestaurantIdAndDate(id, restaurantId,  LocalDate.now()), id);
+        return checkNotFound(mealRepository.findByIdAndRestaurantIdAndDate(id, restaurantId, LocalDate.now()), id);
     }
 
     @Transactional

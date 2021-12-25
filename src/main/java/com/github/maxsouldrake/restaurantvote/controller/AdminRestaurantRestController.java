@@ -25,7 +25,7 @@ public class AdminRestaurantRestController {
     }
 
     @PutMapping("/{id}")
-    public Restaurant update(@RequestBody Restaurant restaurant,  @PathVariable int id) {
+    public Restaurant update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         restaurant.setId(id);
         return restaurantService.update(restaurant);
     }

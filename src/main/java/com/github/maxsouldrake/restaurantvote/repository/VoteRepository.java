@@ -13,8 +13,9 @@ import java.time.LocalDate;
  **/
 
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
-    Vote findByUserIdAndDate(int user_id, LocalDate date);
-    int deleteByUserIdAndDate(int user_id, LocalDate date);
+    Vote findByUserIdAndDate(int userId, LocalDate date);
+
+    int deleteByUserIdAndDate(int userId, LocalDate date);
 
     @Query("SELECT v FROM Vote v JOIN FETCH v.restaurant WHERE v.user.id=:userId AND v.date=:date")
     Vote findWithRestaurant(@Param("userId") int userId, @Param("date") LocalDate date);

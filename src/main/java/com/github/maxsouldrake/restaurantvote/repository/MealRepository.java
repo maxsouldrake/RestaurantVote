@@ -12,7 +12,9 @@ import java.util.List;
  **/
 
 public interface MealRepository extends JpaRepository<Meal, Integer> {
-    List<Meal> findAllByRestaurantIdAndDate(int restaurant_id, LocalDate date);
-    Meal findByIdAndRestaurantIdAndDate(int id, int restaurant_id, LocalDate date);
-    int deleteByIdAndRestaurantIdAndDate(int id, int restaurant_id, LocalDate date);
+    List<Meal> findAllByRestaurantIdAndDate(int restaurantId, LocalDate date);
+
+    Meal findByIdAndRestaurantIdAndDate(int id, int restaurantId, LocalDate date);
+
+    int deleteByIdAndRestaurantIdAndDate(int id, int restaurantId, LocalDate date);
 }

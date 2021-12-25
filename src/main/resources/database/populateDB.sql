@@ -33,8 +33,8 @@ VALUES ('burger', 1299, 100003),
        ('tea', 215, 100004);
 
 INSERT INTO votes (date, restaurant_id, user_id)
-VALUES ('2020-12-22',100003, 100000),
-       ('2020-12-22',100004, 100001);
+VALUES ('2020-12-22', 100003, 100000),
+       ('2020-12-22', 100004, 100001);
 
 INSERT INTO votes (restaurant_id, user_id)
 VALUES (100003, 100000);

@@ -38,7 +38,7 @@ public class ValidationUtil {
     }
 
     public static void checkTimeLate() {
-        if (LocalTime.now().isBefore(LocalTime.of(11,0))) {
+        if (LocalTime.now().isBefore(LocalTime.of(11, 0))) {
             throw new UnmodifiableVoteException("vote cannot be changed after 11:00");
         }
     }

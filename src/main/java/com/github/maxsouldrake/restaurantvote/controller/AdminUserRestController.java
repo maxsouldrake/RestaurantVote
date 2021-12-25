@@ -42,7 +42,7 @@ public class AdminUserRestController {
     }
 
     @PutMapping("/{id}")
-    public User update(@RequestBody User user,  @PathVariable int id) {
+    public User update(@RequestBody User user, @PathVariable int id) {
         user.setId(id);
         return userService.update(user);
     }
