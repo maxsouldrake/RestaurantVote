@@ -35,6 +35,11 @@ public class VoteService {
         return checkNotFound(voteRepository.findByUserIdAndDate(userId, date), userId, date);
     }
 
+    public Vote getWithRestaurant(int userId) {
+        LocalDate date = LocalDate.now();
+        return checkNotFound(voteRepository.findWithRestaurant(userId,date), userId, date);
+    }
+
     @Transactional
     public Vote update(Vote vote, int userId, int restaurantId) {
         checkTimeLate();

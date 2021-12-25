@@ -25,6 +25,11 @@ public class VoteRestController {
         return voteService.get(SecurityUtil.authUserId());
     }
 
+    @GetMapping("/with-restaurant")
+    public Vote getWithRestaurant() {
+        return voteService.getWithRestaurant(SecurityUtil.authUserId());
+    }
+
     @PostMapping
     public Vote create(@RequestBody Vote vote, @RequestParam int restaurantId) {
         return voteService.create(vote, SecurityUtil.authUserId(), restaurantId);

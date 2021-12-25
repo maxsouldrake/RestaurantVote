@@ -31,6 +31,13 @@ class VoteServiceTest {
     }
 
     @Test
+    void getWithRestaurant() {
+        Vote vote = voteService.getWithRestaurant(USER_ID);
+        assertEquals(vote, user1TodayVote);
+        assertEquals(vote.getRestaurant(), restaurant1);
+    }
+
+    @Test
     void create() {
         Vote newVote = getNew(Vote.class);
         Vote created = voteService.create(getNew(Vote.class), USER_ID + 1, RESTAURANT_ID + 1);

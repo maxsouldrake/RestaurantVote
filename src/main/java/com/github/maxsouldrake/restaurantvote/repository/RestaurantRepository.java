@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer> {
     Restaurant findByTitle(String title);
 
-    @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r JOIN r.menu m WHERE r.id =:id AND m.date=:date")
+    @EntityGraph(attributePaths = {"menu", "votes"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT r FROM Restaurant r JOIN r.menu m JOIN r.votes v WHERE r.id =:id AND m.date=:date AND v.date=:date")
     Restaurant findWithMenuAndVotes(@Param("id") int id, @Param("date") LocalDate date);
 }

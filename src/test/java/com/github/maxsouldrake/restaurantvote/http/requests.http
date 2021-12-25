@@ -30,6 +30,10 @@ GET http://localhost:8080/restaurant-vote/profile/vote
 
 ###
 
+GET http://localhost:8080/restaurant-vote/profile/vote/with-restaurant
+
+###
+
 GET http://localhost:8080/restaurant-vote/admin/users
 
 ###
