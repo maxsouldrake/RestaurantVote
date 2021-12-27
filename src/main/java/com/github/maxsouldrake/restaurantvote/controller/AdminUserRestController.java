@@ -36,12 +36,12 @@ public class AdminUserRestController {
         return userService.getByEmail(email);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public User create(@RequestBody User user) {
         return userService.create(user);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public User update(@RequestBody User user, @PathVariable int id) {
         user.setId(id);
         return userService.update(user);

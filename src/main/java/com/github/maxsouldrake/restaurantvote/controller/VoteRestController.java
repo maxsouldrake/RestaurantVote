@@ -30,12 +30,12 @@ public class VoteRestController {
         return voteService.getWithRestaurant(SecurityUtil.authUserId());
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Vote create(@RequestBody Vote vote, @RequestParam int restaurantId) {
         return voteService.create(vote, SecurityUtil.authUserId(), restaurantId);
     }
 
-    @PutMapping
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Vote update(@RequestBody Vote vote, @RequestParam int restaurantId) {
         return voteService.update(vote, SecurityUtil.authUserId(), restaurantId);
     }

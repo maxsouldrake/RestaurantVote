@@ -29,7 +29,7 @@ public class User extends AbstractBaseEntity {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "votes_unique_date_user_idx")})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
+    @JsonManagedReference("user-votes")
     private Set<Vote> votes;
 
     public User(Integer id, String email, String password, Role role) {

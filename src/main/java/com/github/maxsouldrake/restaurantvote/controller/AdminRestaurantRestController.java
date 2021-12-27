@@ -19,12 +19,12 @@ public class AdminRestaurantRestController {
         this.restaurantService = restaurantService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant create(@RequestBody Restaurant restaurant) {
         return restaurantService.create(restaurant);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         restaurant.setId(id);
         return restaurantService.update(restaurant);

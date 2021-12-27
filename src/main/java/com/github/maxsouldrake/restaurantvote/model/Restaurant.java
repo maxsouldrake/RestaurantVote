@@ -24,12 +24,12 @@ public class Restaurant extends AbstractBaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
+    @JsonManagedReference("menu")
     private List<Meal> menu;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonManagedReference
+    @JsonManagedReference("restaurant-votes")
     private Set<Vote> votes;
 
     public Restaurant(Integer id, String title) {
