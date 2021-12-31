@@ -13,7 +13,10 @@ import java.util.Set;
  **/
 
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {@UniqueConstraint(
+        columnNames = {"email"},
+        name = "users_unique_email_idx")})
 public class User extends AbstractBaseEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -25,8 +28,6 @@ public class User extends AbstractBaseEntity {
     @Column(name = "role")
     private Role role;
 
-    @CollectionTable(name = "votes", joinColumns = @JoinColumn(name = "user_id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date"}, name = "votes_unique_date_user_idx")})
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference("user-votes")

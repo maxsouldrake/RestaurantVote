@@ -13,7 +13,10 @@ import java.time.LocalDate;
  **/
 
 @Entity
-@Table(name = "votes")
+@Table(name = "votes",
+        uniqueConstraints = {@UniqueConstraint(
+                columnNames = {"user_id", "date"},
+                name = "votes_unique_date_user_idx")})
 public class Vote extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

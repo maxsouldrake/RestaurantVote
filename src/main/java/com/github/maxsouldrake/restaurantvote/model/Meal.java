@@ -39,7 +39,7 @@ public class Meal extends AbstractBaseEntity {
         this.price = price;
     }
 
-    public Meal(String title, long price, LocalDate date) {
+    public Meal(String title, long price) {
         this(null, title, price);
     }
 
