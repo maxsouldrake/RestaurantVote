@@ -2,6 +2,7 @@ package com.github.maxsouldrake.restaurantvote.controller;
 
 import com.github.maxsouldrake.restaurantvote.model.Vote;
 import com.github.maxsouldrake.restaurantvote.service.VoteService;
+import com.github.maxsouldrake.restaurantvote.to.VoteTo;
 import com.github.maxsouldrake.restaurantvote.util.SecurityUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,23 +22,19 @@ public class VoteRestController {
     }
 
     @GetMapping
-    public Vote get() {
-        return voteService.get(SecurityUtil.authUserId());
-    }
-
-    @GetMapping("/with-restaurant")
-    public Vote getWithRestaurant() {
-        return voteService.getWithRestaurant(SecurityUtil.authUserId());
+    public VoteTo get() {
+        Vote vote = voteService.get(SecurityUtil.authUserId());
+        return new VoteTo(vote.getId(), vote.getRestaurant().getId());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Vote create(@RequestBody Vote vote, @RequestParam int restaurantId) {
-        return voteService.create(vote, SecurityUtil.authUserId(), restaurantId);
+    public Vote create(@RequestBody VoteTo voteTo) {
+        return voteService.create(voteTo, SecurityUtil.authUserId());
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Vote update(@RequestBody Vote vote, @RequestParam int restaurantId) {
-        return voteService.update(vote, SecurityUtil.authUserId(), restaurantId);
+    public Vote update(@RequestBody VoteTo voteTo) {
+        return voteService.update(voteTo, SecurityUtil.authUserId());
     }
 
     @DeleteMapping

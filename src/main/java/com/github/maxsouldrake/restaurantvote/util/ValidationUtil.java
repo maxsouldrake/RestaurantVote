@@ -17,6 +17,15 @@ public class ValidationUtil {
         checkNotFound(found, "id=" + id);
     }
 
+    public static <T> T checkNotFound(T object, int id, int restaurantId) {
+        checkNotFound(object != null, id, restaurantId);
+        return object;
+    }
+
+    public static void checkNotFound(boolean found, int id, int restaurantId) {
+        checkNotFound(found, "id=" + id + ", restaurantId=" + restaurantId);
+    }
+
     public static <T> T checkNotFound(T object, int userId, LocalDate date) {
         checkNotFound(object != null, userId, date);
         return object;
@@ -38,7 +47,7 @@ public class ValidationUtil {
     }
 
     public static void checkTimeLate() {
-        if (LocalTime.now().isBefore(LocalTime.of(11, 0))) {
+        if (LocalTime.now().isAfter(LocalTime.of(11, 0))) {
             throw new UnmodifiableVoteException("vote cannot be changed after 11:00");
         }
     }

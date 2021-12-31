@@ -1,51 +1,97 @@
+###
+### Restaurant Controller ###
+###
+
 GET http://localhost:8080/restaurant-vote/restaurants
 
 ###
-
 GET http://localhost:8080/restaurant-vote/restaurants/100003
-
 ###
-
 GET http://localhost:8080/restaurant-vote/restaurants/100003/with-menu-and-votes
-
 ###
-
 GET http://localhost:8080/restaurant-vote/restaurants/by-title?title=Burger Frog
-
 ###
-
 GET http://localhost:8080/restaurant-vote/restaurants/100003/menu
-
 ###
-
 GET http://localhost:8080/restaurant-vote/restaurants/100003/menu/100011
-
 ###
+### Admin Restaurant Controller ###
+###
+POST http://localhost:8080/restaurant-vote/admin/restaurants
+Content-Type: application/json;charset=UTF-8
 
+{"title": "new restaurant"}
+###
+PUT http://localhost:8080/restaurant-vote/admin/restaurants/100019
+Content-Type: application/json;charset=UTF-8
+
+{"title":  "updated restaurant"}
+###
+DELETE http://localhost:8080/restaurant-vote/admin/restaurants/100019
+###
+### Profile Controller ###
+###
 GET http://localhost:8080/restaurant-vote/profile
-
 ###
+POST http://localhost:8080/restaurant-vote/profile
+Content-Type: application/json
 
-GET http://localhost:8080/restaurant-vote/profile/vote
-
+{"email": "test@mail.ru", "password": "test-password", "role": "USER"}
 ###
+PUT http://localhost:8080/restaurant-vote/profile
+Content-Type: application/json
 
-GET http://localhost:8080/restaurant-vote/profile/vote/with-restaurant
-
+{"email": "updatetest@mail.ru", "password": "updatepass", "role": "USER"}
 ###
-
+DELETE http://localhost:8080/restaurant-vote/profile
+###
+### Admin User Controller ###
+###
 GET http://localhost:8080/restaurant-vote/admin/users
-
 ###
-
-GET http://localhost:8080/restaurant-vote/admin/users/100002
-
+GET http://localhost:8080/restaurant-vote/admin/users/100001
 ###
-
-GET http://localhost:8080/restaurant-vote/admin/users/by-email?email=user1@gmail.com
-
+GET http://localhost:8080/restaurant-vote/admin/users/by-email?email=user2@gmail.com
 ###
+POST http://localhost:8080/restaurant-vote/admin/users
+Content-Type: application/json;charset=UTF-8
 
+{"email": "testmail@mail.com", "password": "testpass", "role": "USER"}
+###
+PUT http://localhost:8080/restaurant-vote/admin/users/100021
+Content-Type: application/json;charset=UTF-8
 
+{"email": "updatedmail@mail.com", "password": "updatedpass", "role": "ADMIN"}
+###
+DELETE http://localhost:8080/restaurant-vote/admin/users/100001
+###
+### Vote Controller ###
+###
+GET http://localhost:8080/restaurant-vote/profile/vote
+###
+POST http://localhost:8080/restaurant-vote/profile/vote
+Content-Type: application/json
 
+{"restaurantId": 100003}
+###
+PUT http://localhost:8080/restaurant-vote/profile/vote
+Content-Type: application/json
+
+{"restaurantId": 100003}
+###
+DELETE http://localhost:8080/restaurant-vote/profile/vote
+###
+### Admin Meal Controller ###
+###
+POST http://localhost:8080/restaurant-vote/admin/restaurants/100003/menu
+Content-Type: application/json
+
+{"title": "newmeal", "price": 100}
+###
+PUT http://localhost:8080/restaurant-vote/admin/restaurants/100004/menu/100011
+Content-Type: application/json
+
+{"title": "updatedmeal", "price": 100, "date": "2021-12-28"}
+###
+DELETE http://localhost:8080/restaurant-vote/admin/restaurants/100003/menu/100011
 

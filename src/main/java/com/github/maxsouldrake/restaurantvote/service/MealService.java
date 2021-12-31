@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
 
@@ -32,14 +33,7 @@ public class MealService {
     }
 
     public Meal get(int id, int restaurantId) {
-        return checkNotFound(mealRepository.findByIdAndRestaurantIdAndDate(id, restaurantId, LocalDate.now()), id);
-    }
-
-    @Transactional
-    public Meal update(Meal meal, int restaurantId) {
-        meal.setRestaurant(restaurantRepository.getById(restaurantId));
-        checkNotFound(get(meal.getId(), restaurantId), restaurantId);
-        return mealRepository.save(meal);
+        return checkNotFound(mealRepository.findByIdAndRestaurantIdAndDate(id, restaurantId, LocalDate.now()), id, restaurantId);
     }
 
     @Transactional
@@ -49,7 +43,15 @@ public class MealService {
     }
 
     @Transactional
+    public Meal update(Meal meal, int restaurantId) {
+        int id = Objects.requireNonNull(meal.getId());
+        meal.setRestaurant(restaurantRepository.getById(restaurantId));
+        checkNotFound(get(id, restaurantId), id, restaurantId);
+        return mealRepository.save(meal);
+    }
+
+    @Transactional
     public void delete(int id, int restaurantId) {
-        checkNotFound(mealRepository.deleteByIdAndRestaurantIdAndDate(id, restaurantId, LocalDate.now()) != 0, id);
+        checkNotFound(mealRepository.deleteByIdAndRestaurantIdAndDate(id, restaurantId, LocalDate.now()) != 0, id, restaurantId);
     }
 }

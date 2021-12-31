@@ -3,6 +3,7 @@ package com.github.maxsouldrake.restaurantvote.service;
 import com.github.maxsouldrake.restaurantvote.config.AppConfig;
 import com.github.maxsouldrake.restaurantvote.config.PersistenceConfig;
 import com.github.maxsouldrake.restaurantvote.model.Vote;
+import com.github.maxsouldrake.restaurantvote.to.VoteTo;
 import com.github.maxsouldrake.restaurantvote.util.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,10 @@ class VoteServiceTest {
     }
 
     @Test
-    void getWithRestaurant() {
-        Vote vote = voteService.getWithRestaurant(USER_ID);
-        assertEquals(vote, user1TodayVote);
-        assertEquals(vote.getRestaurant(), restaurant1);
-    }
-
-    @Test
     void create() {
         Vote newVote = getNew(Vote.class);
-        Vote created = voteService.create(getNew(Vote.class), USER_ID + 1, RESTAURANT_ID + 1);
+        VoteTo voteTo = new VoteTo(newVote.getRestaurant().getId());
+        Vote created = voteService.create(voteTo, USER_ID + 1);
         Integer newId = created.getId();
         newVote.setId(newId);
         assertEquals(created, newVote);
@@ -50,12 +45,14 @@ class VoteServiceTest {
     @Test
     void duplicateDateCreate() {
         assertThrows(DataAccessException.class, () ->
-                voteService.create(new Vote(restaurant1), USER_ID, RESTAURANT_ID));
+                voteService.create(new VoteTo(RESTAURANT_ID), USER_ID));
     }
 
     @Test
     void update() {
-        Vote updated = voteService.update(getUpdated(Vote.class), USER_ID, RESTAURANT_ID);
+        Vote updatedVote = getUpdated(Vote.class);
+        VoteTo voteTo = new VoteTo(updatedVote.getId(), updatedVote.getRestaurant().getId());
+        Vote updated = voteService.update(voteTo, USER_ID);
         assertEquals(voteService.get(USER_ID), updated);
     }
 

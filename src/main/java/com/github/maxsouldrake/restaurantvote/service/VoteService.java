@@ -4,13 +4,13 @@ import com.github.maxsouldrake.restaurantvote.model.Vote;
 import com.github.maxsouldrake.restaurantvote.repository.RestaurantRepository;
 import com.github.maxsouldrake.restaurantvote.repository.UserRepository;
 import com.github.maxsouldrake.restaurantvote.repository.VoteRepository;
+import com.github.maxsouldrake.restaurantvote.to.VoteTo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
 import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
-import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkTimeLate;
 
 /**
  * @author SoulDrake
@@ -35,31 +35,28 @@ public class VoteService {
         return checkNotFound(voteRepository.findByUserIdAndDate(userId, date), userId, date);
     }
 
-    public Vote getWithRestaurant(int userId) {
-        LocalDate date = LocalDate.now();
-        return checkNotFound(voteRepository.findWithRestaurant(userId, date), userId, date);
-    }
-
     @Transactional
-    public Vote update(Vote vote, int userId, int restaurantId) {
-        checkTimeLate();
+    public Vote update(VoteTo voteTo, int userId) {
+//        checkTimeLate();
         LocalDate date = LocalDate.now();
+        Vote vote = get(userId);
         vote.setUser(userRepository.getById(userId));
-        vote.setRestaurant(restaurantRepository.getById(restaurantId));
+        vote.setRestaurant(restaurantRepository.getById(voteTo.getRestaurantId()));
         checkNotFound(get(userId), userId, date);
         return voteRepository.save(vote);
     }
 
     @Transactional
-    public Vote create(Vote vote, int userId, int restaurantId) {
+    public Vote create(VoteTo voteTo, int userId) {
+        Vote vote = new Vote();
         vote.setUser(userRepository.getById(userId));
-        vote.setRestaurant(restaurantRepository.getById(restaurantId));
+        vote.setRestaurant(restaurantRepository.getById(voteTo.getRestaurantId()));
         return voteRepository.save(vote);
     }
 
     @Transactional
     public void delete(int userId) {
-        checkTimeLate();
+//        checkTimeLate();
         LocalDate date = LocalDate.now();
         checkNotFound(voteRepository.deleteByUserIdAndDate(userId, date) != 0, userId, date);
     }
