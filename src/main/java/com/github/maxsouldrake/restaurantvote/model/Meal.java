@@ -3,8 +3,11 @@ package com.github.maxsouldrake.restaurantvote.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 /**
@@ -19,9 +22,12 @@ import java.time.LocalDate;
                 name = "meals_unique_restaurant_title_date_idx")})
 public class Meal extends AbstractBaseEntity {
     @Column(name = "title", nullable = false)
+    @NotBlank
+    @Size(min = 5, max = 100)
     private String title;
 
     @Column(name = "price", nullable = false)
+    @Range(min = 10, max = 1_000_000)
     private long price;
 
     @Column(name = "date", nullable = false)

@@ -30,6 +30,7 @@
 
         <!--   Hibernate    -->
         <hibernate.version>5.6.1.Final</hibernate.version>
+        <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
 
         <!--   Logging   -->
         <logback.version>1.2.6</logback.version>
@@ -76,6 +77,12 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+
 
         <!--    Database    -->
         <dependency>

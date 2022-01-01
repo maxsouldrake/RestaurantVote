@@ -5,6 +5,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
@@ -19,13 +23,19 @@ import java.util.Set;
         name = "users_unique_email_idx")})
 public class User extends AbstractBaseEntity {
     @Column(name = "email", nullable = false, unique = true)
+    @Email
+    @NotBlank
+    @Size(max = 100)
     private String email;
 
     @Column(name = "password", nullable = false)
+    @NotBlank
+    @Size(min = 8, max = 16)
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
+    @NotNull
     private Role role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

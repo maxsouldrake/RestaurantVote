@@ -5,6 +5,8 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +22,8 @@ import java.util.Set;
                 name = "restaurants_unique_title_idx")})
 public class Restaurant extends AbstractBaseEntity {
     @Column(name = "title", nullable = false, unique = true)
+    @NotBlank
+    @Size(min = 1, max = 100)
     private String title;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
