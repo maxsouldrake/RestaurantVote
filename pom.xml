@@ -22,29 +22,29 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!--    Spring  -->
-        <spring.version>5.3.12</spring.version>
+        <spring.version>5.3.14</spring.version>
         <spring-data-jpa.version>2.6.0</spring-data-jpa.version>
 
         <!--    Database    -->
         <hsqldb.version>2.6.1</hsqldb.version>
 
         <!--   Hibernate    -->
-        <hibernate.version>5.6.1.Final</hibernate.version>
-        <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
+        <hibernate.version>5.6.3.Final</hibernate.version>
+        <hibernate-validator.version>6.2.1.Final</hibernate-validator.version>
 
         <!--   Logging   -->
-        <logback.version>1.2.6</logback.version>
+        <logback.version>1.2.10</logback.version>
         <slf4j.version>1.7.32</slf4j.version>
 
         <!--   Tests   -->
-        <junit.jupiter.version>5.8.1</junit.jupiter.version>
+        <junit.jupiter.version>5.8.2</junit.jupiter.version>
         <assertj.version>3.21.0</assertj.version>
 
         <!--   Tomcat   -->
         <tomcat.version>9.0.54</tomcat.version>
 
         <!--   JSON   -->
-        <jackson.version>2.13.0</jackson.version>
+        <jackson.version>2.13.1</jackson.version>
     </properties>
 
     <dependencies>
@@ -82,7 +82,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
         </dependency>
-
 
         <!--    Database    -->
         <dependency>
