@@ -6,6 +6,8 @@ import com.github.maxsouldrake.restaurantvote.util.SecurityUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author SoulDrake
  * @create 2021-12-17 18:12
@@ -26,12 +28,12 @@ public class ProfileRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User create(@RequestBody User user) {
+    public User create(@RequestBody @Valid User user) {
         return userService.create(user);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User update(@RequestBody User user) {
+    public User update(@RequestBody @Valid User user) {
         user.setId(SecurityUtil.authUserId());
         return userService.update(user);
     }

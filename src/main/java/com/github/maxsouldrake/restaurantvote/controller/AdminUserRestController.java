@@ -5,6 +5,7 @@ import com.github.maxsouldrake.restaurantvote.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -37,12 +38,12 @@ public class AdminUserRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User create(@RequestBody User user) {
+    public User create(@RequestBody @Valid User user) {
         return userService.create(user);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User update(@RequestBody User user, @PathVariable int id) {
+    public User update(@RequestBody @Valid User user, @PathVariable int id) {
         user.setId(id);
         return userService.update(user);
     }

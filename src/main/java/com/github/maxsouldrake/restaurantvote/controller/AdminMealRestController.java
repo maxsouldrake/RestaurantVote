@@ -5,6 +5,8 @@ import com.github.maxsouldrake.restaurantvote.service.MealService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author SoulDrake
  * @create 2021-12-17 18:16
@@ -20,12 +22,12 @@ public class AdminMealRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Meal create(@RequestBody Meal meal, @PathVariable int restaurantId) {
+    public Meal create(@RequestBody @Valid Meal meal, @PathVariable int restaurantId) {
         return mealService.create(meal, restaurantId);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Meal update(@RequestBody Meal meal, @PathVariable int restaurantId, @PathVariable int id) {
+    public Meal update(@RequestBody @Valid Meal meal, @PathVariable int restaurantId, @PathVariable int id) {
         meal.setId(id);
         return mealService.update(meal, restaurantId);
     }

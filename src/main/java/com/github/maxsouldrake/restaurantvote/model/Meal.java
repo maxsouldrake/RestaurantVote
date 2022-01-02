@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class Meal extends AbstractBaseEntity {
     @Column(name = "title", nullable = false)
     @NotBlank
-    @Size(min = 5, max = 100)
+    @Size(min = 2, max = 100)
     private String title;
 
     @Column(name = "price", nullable = false)
