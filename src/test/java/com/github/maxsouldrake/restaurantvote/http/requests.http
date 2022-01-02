@@ -16,80 +16,100 @@ GET http://localhost:8080/restaurant-vote/restaurants/100003/menu/100011
 ### Admin Restaurant Controller ###
 ###
 POST http://localhost:8080/restaurant-vote/admin/restaurants
+Authorization: Basic admin@gmail.com adminpass
 Content-Type: application/json;charset=UTF-8
 
 {"title": "new restaurant"}
 ###
 PUT http://localhost:8080/restaurant-vote/admin/restaurants/100019
+Authorization: Basic admin@gmail.com adminpass
 Content-Type: application/json;charset=UTF-8
 
 {"title":  "updated restaurant"}
 ###
 DELETE http://localhost:8080/restaurant-vote/admin/restaurants/100019
+Authorization: Basic admin@gmail.com adminpass
 ###
 ### Profile Controller ###
 ###
 GET http://localhost:8080/restaurant-vote/profile
+Authorization: Basic user1@gmail.com user1pass
 ###
 POST http://localhost:8080/restaurant-vote/profile
+Authorization: Basic user1@gmail.com user1pass
 Content-Type: application/json
 
 {"email": "test@mail.ru", "password": "test-password", "role": "USER"}
 ###
 PUT http://localhost:8080/restaurant-vote/profile
+Authorization: Basic user1@gmail.com user1pass
 Content-Type: application/json
 
 {"email": "updatetest@mail.ru", "password": "updatepass", "role": "USER"}
 ###
 DELETE http://localhost:8080/restaurant-vote/profile
+Authorization: Basic user1@gmail.com user1pass
 ###
 ### Admin User Controller ###
 ###
 GET http://localhost:8080/restaurant-vote/admin/users
+Authorization: Basic admin@gmail.com adminpass
 ###
 GET http://localhost:8080/restaurant-vote/admin/users/100001
+Authorization: Basic admin@gmail.com adminpass
 ###
 GET http://localhost:8080/restaurant-vote/admin/users/by-email?email=user2@gmail.com
+Authorization: Basic admin@gmail.com adminpass
 ###
 POST http://localhost:8080/restaurant-vote/admin/users
+Authorization: Basic admin@gmail.com adminpass
 Content-Type: application/json;charset=UTF-8
 
 {"email": "testmail@mail.com", "password": "testpass", "role": "USER"}
 ###
 PUT http://localhost:8080/restaurant-vote/admin/users/100021
+Authorization: Basic admin@gmail.com adminpass
 Content-Type: application/json;charset=UTF-8
 
 {"email": "updatedmail@mail.com", "password": "updatedpass", "role": "ADMIN"}
 ###
 DELETE http://localhost:8080/restaurant-vote/admin/users/100001
+Authorization: Basic admin@gmail.com adminpass
 ###
 ### Vote Controller ###
 ###
 GET http://localhost:8080/restaurant-vote/profile/vote
+Authorization: Basic user1@gmail.com user1pass
 ###
 POST http://localhost:8080/restaurant-vote/profile/vote
+Authorization: Basic user1@gmail.com user1pass
 Content-Type: application/json
 
 {"restaurantId": 100003}
 ###
 PUT http://localhost:8080/restaurant-vote/profile/vote
+Authorization: Basic user1@gmail.com user1pass
 Content-Type: application/json
 
 {"restaurantId": 100004}
 ###
 DELETE http://localhost:8080/restaurant-vote/profile/vote
+Authorization: Basic user1@gmail.com user1pass
 ###
 ### Admin Meal Controller ###
 ###
 POST http://localhost:8080/restaurant-vote/admin/restaurants/100003/menu
+Authorization: Basic admin@gmail.com adminpass
 Content-Type: application/json
 
 {"title": "newmeal", "price": 100}
 ###
 PUT http://localhost:8080/restaurant-vote/admin/restaurants/100003/menu/100011
+Authorization: Basic admin@gmail.com adminpass
 Content-Type: application/json
 
 {"title": "updatedmeal", "price": 100}
 ###
 DELETE http://localhost:8080/restaurant-vote/admin/restaurants/100003/menu/100011
+Authorization: Basic admin@gmail.com adminpass
 
