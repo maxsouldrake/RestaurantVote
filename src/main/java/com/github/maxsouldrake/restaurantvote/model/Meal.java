@@ -1,6 +1,7 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
@@ -31,6 +32,7 @@ public class Meal extends AbstractBaseEntity {
     private long price;
 
     @Column(name = "date", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private final LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

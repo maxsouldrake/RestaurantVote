@@ -1,6 +1,7 @@
 package com.github.maxsouldrake.restaurantvote.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -30,7 +31,7 @@ public class User extends AbstractBaseEntity {
 
     @Column(name = "password", nullable = false)
     @NotBlank
-    @Size(min = 8, max = 16)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Enumerated(EnumType.STRING)
