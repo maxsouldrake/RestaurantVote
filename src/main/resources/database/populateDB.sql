@@ -9,9 +9,9 @@ FROM restaurants;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (email, password, role)
-VALUES ('user1@gmail.com', 'user1pass', 'USER'),
-       ('user2@gmail.com', 'user2pass', 'USER'),
-       ('admin@gmail.com', 'adminpass', 'ADMIN');
+VALUES ('user1@gmail.com', '{noop}user1pass', 'USER'),
+       ('user2@gmail.com', '{noop}user2pass', 'USER'),
+       ('admin@gmail.com', '{noop}adminpass', 'ADMIN');
 
 INSERT INTO restaurants (title)
 VALUES ('Burger Frog'),

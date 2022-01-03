@@ -6,8 +6,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.sql.DataSource;
 
 /**
  * @author SoulDrake
@@ -17,27 +19,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final DataSource dataSource;
+
+    public SecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(passwordEncoder())
-                .withUser("user1@gmail.com").password(passwordEncoder().encode("user1pass")).roles("USER").and()
-                .withUser("user2@gmail.com").password(passwordEncoder().encode("user2pass")).roles("USER").and()
-                .withUser("admin@gmail.com").password(passwordEncoder().encode("adminpass")).roles("ADMIN");
+        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(passwordEncoder())
+                .usersByUsernameQuery("select email, password, 'true' as enabled from users where email = ?")
+                .authoritiesByUsernameQuery("select email, role from users where email = ?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/profile/**").hasRole("USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .and().httpBasic();
+                .antMatchers("/login").permitAll()
+                .antMatchers("/profile/**").hasAuthority("USER")
+                .antMatchers("/admin/**").hasAuthority("ADMIN");
+        http.httpBasic();
         http.csrf().disable();
-        http.logout();
+        http.formLogin().loginPage("/login");
+        http.logout().logoutSuccessUrl("/login");
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }

@@ -2,6 +2,7 @@ package com.github.maxsouldrake.restaurantvote.service;
 
 import com.github.maxsouldrake.restaurantvote.model.User;
 import com.github.maxsouldrake.restaurantvote.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,11 @@ import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNo
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<User> getAll() {
@@ -40,11 +43,13 @@ public class UserService {
 
     @Transactional
     public User update(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return checkNotFound(userRepository.save(user), user.getId());
     }
 
     @Transactional
     public User create(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
