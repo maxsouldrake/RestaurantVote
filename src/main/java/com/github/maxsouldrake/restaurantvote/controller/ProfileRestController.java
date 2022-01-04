@@ -2,8 +2,9 @@ package com.github.maxsouldrake.restaurantvote.controller;
 
 import com.github.maxsouldrake.restaurantvote.model.User;
 import com.github.maxsouldrake.restaurantvote.service.UserService;
-import com.github.maxsouldrake.restaurantvote.util.SecurityUtil;
+import com.github.maxsouldrake.restaurantvote.util.AuthorizedUser;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,8 +24,8 @@ public class ProfileRestController {
     }
 
     @GetMapping
-    public User get() {
-        return userService.get(SecurityUtil.authUserId());
+    public User get(@AuthenticationPrincipal AuthorizedUser authUser) {
+        return userService.get(authUser.getId());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -33,14 +34,14 @@ public class ProfileRestController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User update(@RequestBody @Valid User user) {
-        user.setId(SecurityUtil.authUserId());
+    public User update(@RequestBody @Valid User user, @AuthenticationPrincipal AuthorizedUser authUser) {
+        user.setId(authUser.getId());
         return userService.update(user);
     }
 
     @DeleteMapping
-    public void delete() {
-        userService.delete(SecurityUtil.authUserId());
+    public void delete(@AuthenticationPrincipal AuthorizedUser authUser) {
+        userService.delete(authUser.getId());
     }
 
 }

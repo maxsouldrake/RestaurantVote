@@ -10,6 +10,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -22,7 +24,10 @@ import java.util.Set;
         uniqueConstraints = {@UniqueConstraint(
                 columnNames = {"email"},
                 name = "users_unique_email_idx")})
-public class User extends AbstractBaseEntity {
+public class User extends AbstractBaseEntity implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
