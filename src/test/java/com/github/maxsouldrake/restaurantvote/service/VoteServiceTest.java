@@ -1,23 +1,16 @@
 package com.github.maxsouldrake.restaurantvote.service;
 
-import com.github.maxsouldrake.restaurantvote.config.AppConfig;
-import com.github.maxsouldrake.restaurantvote.config.PersistenceConfig;
 import com.github.maxsouldrake.restaurantvote.model.Vote;
 import com.github.maxsouldrake.restaurantvote.to.VoteTo;
 import com.github.maxsouldrake.restaurantvote.util.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static com.github.maxsouldrake.restaurantvote.TestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitConfig({AppConfig.class, PersistenceConfig.class})
-@Sql(scripts = "classpath:database/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"), executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-class VoteServiceTest {
+class VoteServiceTest extends AbstractServiceTest {
     @Autowired
     private VoteService voteService;
 
