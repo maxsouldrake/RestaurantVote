@@ -13,7 +13,7 @@ import javax.validation.Valid;
  **/
 
 @RestController
-@RequestMapping(value = "/admin/restaurants/{restaurantId}/menu", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/restaurant-vote/admin/restaurants/{restaurantId}/menu", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminMealRestController {
     private final MealService mealService;
 

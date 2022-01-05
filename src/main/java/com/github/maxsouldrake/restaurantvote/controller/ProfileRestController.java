@@ -15,7 +15,7 @@ import javax.validation.Valid;
  **/
 
 @RestController
-@RequestMapping(value = "/profile", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/restaurant-vote/profile", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileRestController {
     private final UserService userService;
 

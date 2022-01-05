@@ -14,7 +14,7 @@ import java.util.List;
  **/
 
 @RestController
-@RequestMapping(value = "/admin/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/restaurant-vote/admin/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminUserRestController {
     private final UserService userService;
 

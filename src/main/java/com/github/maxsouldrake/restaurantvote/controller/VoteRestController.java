@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  **/
 
 @RestController
-@RequestMapping(value = "/profile/vote", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/restaurant-vote/profile/vote", produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController {
     private final VoteService voteService;
 

@@ -1,6 +1,9 @@
 package com.github.maxsouldrake.restaurantvote.config;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import org.hsqldb.Server;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,6 +12,14 @@ import org.springframework.context.annotation.Configuration;
  **/
 
 @Configuration
-@ComponentScan("com.github.maxsouldrake.**.service")
 public class AppConfig {
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public Server hsqldbServer() {
+        return new Server();
+    }
+
+    @Bean
+    Module module() {
+        return new Hibernate5Module();
+    }
 }

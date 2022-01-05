@@ -15,7 +15,7 @@ import java.util.List;
  **/
 
 @RestController
-@RequestMapping(value = "/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/restaurant-vote/restaurants", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantRestController {
     private final RestaurantService restaurantService;
     private final MealService mealService;

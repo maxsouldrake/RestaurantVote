@@ -1,17 +1,11 @@
 package com.github.maxsouldrake.restaurantvote.service;
 
-import com.github.maxsouldrake.restaurantvote.config.AppConfig;
-import com.github.maxsouldrake.restaurantvote.config.PersistenceConfig;
-import com.github.maxsouldrake.restaurantvote.config.SecurityConfig;
 import com.github.maxsouldrake.restaurantvote.model.Role;
 import com.github.maxsouldrake.restaurantvote.model.User;
 import com.github.maxsouldrake.restaurantvote.util.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
 

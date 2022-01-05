@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 
 import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkNotFound;
+import static com.github.maxsouldrake.restaurantvote.util.ValidationUtil.checkTimeLate;
 
 /**
  * @author SoulDrake
@@ -37,7 +38,7 @@ public class VoteService {
 
     @Transactional
     public Vote update(VoteTo voteTo, int userId) {
-//        checkTimeLate();
+        checkTimeLate();
         LocalDate date = LocalDate.now();
         Vote vote = get(userId);
         vote.setUser(userRepository.getById(userId));
@@ -56,7 +57,7 @@ public class VoteService {
 
     @Transactional
     public void delete(int userId) {
-//        checkTimeLate();
+        checkTimeLate();
         LocalDate date = LocalDate.now();
         checkNotFound(voteRepository.deleteByUserIdAndDate(userId, date) != 0, userId, date);
     }

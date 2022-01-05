@@ -1,7 +1,8 @@
 package com.github.maxsouldrake.restaurantvote.config;
 
-import com.github.maxsouldrake.restaurantvote.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.maxsouldrake.restaurantvote.model.User;
+import com.github.maxsouldrake.restaurantvote.repository.UserRepository;
+import com.github.maxsouldrake.restaurantvote.util.AuthorizedUser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,6 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,30 +24,47 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final AuthService authService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public SecurityConfig(AuthService authService) {
-        this.authService = authService;
+    public SecurityConfig(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Bean
+    @Override
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return super.userDetailsServiceBean();
     }
 
     @Override
+    protected UserDetailsService userDetailsService() {
+        return email -> {
+            User user = userRepository.findByEmail(email.toLowerCase());
+            if (user == null) {
+                throw new UsernameNotFoundException("User " + email + " is not found");
+            }
+            return new AuthorizedUser(user);
+        };
+    }
+
+
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(authService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/profile").anonymous()
-                .antMatchers("/profile/**").hasRole("USER")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/restaurant-vote/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/restaurant-vote/profile").anonymous()
+                .antMatchers("/restaurant-vote/profile/**").hasRole("USER")
+                .antMatchers("/restaurant-vote/admin/**").hasRole("ADMIN")
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
-                .formLogin().loginPage("/login")
-                .and().logout().logoutSuccessUrl("/login");
+                .formLogin().loginPage("/restaurant-vote/login")
+                .and().logout().logoutSuccessUrl("/restaurant-vote/login");
     }
 
     @Bean

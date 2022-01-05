@@ -36,19 +36,18 @@ GET http://localhost:8080/restaurant-vote/profile
 Authorization: Basic user1@gmail.com user1pass
 ###
 POST http://localhost:8080/restaurant-vote/profile
-Authorization: Basic user1@gmail.com user1pass
 Content-Type: application/json
 
 {"email": "test@mail.ru", "password": "test-password", "role": "USER"}
 ###
 PUT http://localhost:8080/restaurant-vote/profile
-Authorization: Basic user1@gmail.com user1pass
+Authorization: Basic test@mail.ru test-password
 Content-Type: application/json
 
 {"email": "updatetest@mail.ru", "password": "updatepass", "role": "USER"}
 ###
 DELETE http://localhost:8080/restaurant-vote/profile
-Authorization: Basic user1@gmail.com user1pass
+Authorization: Basic updatetest@mail.ru updatepass
 ###
 ### Admin User Controller ###
 ###
@@ -82,7 +81,7 @@ GET http://localhost:8080/restaurant-vote/profile/vote
 Authorization: Basic user1@gmail.com user1pass
 ###
 POST http://localhost:8080/restaurant-vote/profile/vote
-Authorization: Basic user1@gmail.com user1pass
+Authorization: Basic user2@gmail.com user2pass
 Content-Type: application/json
 
 {"restaurantId": 100003}
