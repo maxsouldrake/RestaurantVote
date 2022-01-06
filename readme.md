@@ -1,6 +1,6 @@
 Restaurant Vote
 ===============================
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f073203d69b74172b254581172434e7d)](https://www.codacy.com/gh/maxsouldrake/RestaurantVote/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=maxsouldrake/RestaurantVote&amp;utm_campaign=Badge_Grade)
 
 ### Test Project
 
